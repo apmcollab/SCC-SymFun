@@ -828,6 +828,22 @@ double SymFun::operator()(double x1, double x2, double x3, double x4) const
     evaluationData[3] = x4;
     return evaluate();
 }
+
+/**
+ Returns the value of the SymFun using the
+ n variable values in the <vector>double x.
+ @arg x vector<double> array of values
+*/
+double SymFun::operator()(vector<double>& x) const
+{
+	int n = x.size();
+    if(variableCount != n) argError(n, variableCount);
+
+    int i;
+    for(i = 0; i < n; i++) evaluationData[i] = x[i];
+    return evaluate();
+}
+
 /**
  Returns the value of the SymFun using the
  n variable values in the double array x.

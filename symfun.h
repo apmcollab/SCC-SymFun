@@ -55,8 +55,6 @@ public  :
     	initialize(V,C,Cvalues,S);
     }
 
-
-
     int initialize(const string& S)
     {
     	return initialize(S.c_str());
@@ -130,10 +128,11 @@ public  :
 	}
 #endif
 
+
 #if __cplusplus > 199711L
-	std::function<double(double*, int n)> getEvaluationPtrNd() const
+	std::function<double(vector<double>&)> getEvaluationPtrNd() const
 	{
-	std::function<double(double*, int n)> F = [this](double*x, int n) {return this->operator()(x,n);};
+	std::function<double(vector<double>&)> F = [this](vector<double>& x) {return this->operator()(x);};
 	return std::move(F);
 	}
 #endif
@@ -183,7 +182,8 @@ public  :
     double operator()(double x1, double x2, double x3) const ;
     double operator()(double x1, double x2, double x3, double x4) const;
 
-    double operator()(double*x, int n) const;
+    double operator()(double*x, int n)   const;
+    double operator()(vector<double>& x) const;
 
 
 public  :
