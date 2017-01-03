@@ -183,7 +183,7 @@ public  :
     double operator()(double x1, double x2, double x3, double x4) const;
 
     double operator()(double*x, int n)   const;
-    double operator()(vector<double>& x) const;
+    double operator()(const vector<double>& x) const;
 
 
 public  :
