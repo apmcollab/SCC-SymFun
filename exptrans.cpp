@@ -17,6 +17,17 @@ using namespace std;
 
 #include "exptrans.h"
 #include "OpLib.h"
+#include "SymFunException.h"
+
+
+/*
+try {
+    ComplexOperationThatCouldFailABunchOfWays();
+} catch (std::exception& e) {
+    cerr << e.what() << endl;
+}
+*/
+
 
 //
 // Bug Fix 02/08/99 : Changed priority of ^ so that it is evaluated
@@ -161,7 +172,8 @@ CAMoperatorLib* OLib)
 //  		            CREATE_TRANSFROM
 //##################################################################
 //
-int expressionTransform::createTransform(char** V, int Vcount, char** C, int Ccount, char* expressionString)
+int expressionTransform::createTransform(char** V, int Vcount, char** C,
+		int Ccount, char* expressionString)
 {
 //
 //  Capture Input Data
@@ -171,7 +183,6 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
     char** vNames = V;
 	char** cNames = C;
     char* inputS  = expressionString;
-//
 //
 //
    int  i;  int j;  int k;
@@ -187,7 +198,19 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
     S[2*strlen(inputS)] = '\0';
 
     int separateReturn;
-    separateReturn = separateIntoTokens(inputS,S);
+    try
+    {
+    	separateReturn = separateIntoTokens(inputS,S);
+    }
+    catch(SymFunException& e)
+    {
+    	delete [] S;
+    	e.offendingString = inputS;
+    	e.setErrorReturn();
+    	cout << e.what() << endl;
+    	throw e;
+    }
+
     if(separateReturn != 0) {delete [] S; return separateReturn;}
 
 //   cout << S << endl;
@@ -265,8 +288,20 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
     long expressionCodeSize;
 
     int encodeReturn;
+
+    try
+    {
     encodeReturn = encodeExpression(S,Ssize,sNames,variableCount, constantCount,
     symbolCount,expressionCode,expressionCodeSize);
+    }
+    catch(SymFunException& e)
+    {
+    e.offendingString = expressionString;
+    e.setErrorReturn();
+    delete [] S; delete [] expressionCode;
+    throw e;
+    }
+
     if(encodeReturn != 0)
     {delete [] S; delete [] expressionCode; return encodeReturn;}
 //
@@ -305,9 +340,10 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
     }
     if(parenthesisCheck != 0)
     {
-    cerr << endl << " Error : Unbalanced Paranthesis  " <<  endl <<endl;
-    cerr << " Offending String :  " << inputS << endl;
-    errorHandler();  delete [] S; delete [] expressionCode; return 1;
+    SymFunException symFunException("Unbalanced Parenthesis","",inputS);
+    errorHandler(); delete [] S; delete [] expressionCode;
+    throw symFunException;
+    return 1;
     }
 //
 //######################################################################
@@ -396,9 +432,22 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
      {jp+=2;}
      iend   = jp;
      expressionCode[jp] = NOOP;expressionCode[jp+1] = NOOP; // consume )
+
+     try
+     {
      sReturn = setupEvaluation(expressionCode,istart,iend,  // process
-                     executionArray,executionIndex, dataIndex);
+               executionArray,executionIndex, dataIndex);
+     }
+     catch(SymFunException& e)
+     {
+    	 e.offendingString = expressionString;
+    	 e.setErrorReturn();
+    	 delete [] S; delete [] expressionCode;
+    	 throw e;
+     }
+
      if(sReturn != 0){delete [] S; delete [] expressionCode; return sReturn;}
+
      pIndex--;
      }}
     }
@@ -407,8 +456,20 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
 //
     istart   = 0;
     iend     = expressionCodeSize;
+
+    try
+    {
     sReturn = setupEvaluation(expressionCode,istart,iend,executionArray,
-                    executionIndex, dataIndex);
+             executionIndex, dataIndex);
+    }
+    catch(SymFunException& e)
+    {
+     e.offendingString = expressionString;
+     e.setErrorReturn();
+   	 delete [] S; delete [] expressionCode;
+   	 throw e;
+    }
+
     if(sReturn != 0){delete [] S; delete [] expressionCode; return sReturn;}
 //
 //  set evaluationDataSize required
@@ -424,9 +485,10 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
     }
     if(resultCount != 1)
     {
-      cerr << endl << " Illegal Expression " <<  endl <<endl;
-      cerr << " Offending String :  " << inputS << endl;
-      errorHandler(); delete [] S; delete [] expressionCode; return 1;    
+        SymFunException symFunException("Illegal Expression","",inputS);
+        errorHandler(); delete [] S; delete [] expressionCode;
+        throw symFunException;
+        return 1;
     }
 
 //
@@ -436,8 +498,6 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C, int Cco
 //
 //######################################################################
 //
-//
-
     delete [] expressionCode;
     delete [] S;
     return 0;
@@ -501,10 +561,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  " <<  endl <<endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+      std::string errInfo = "Offending operator : ";
+      errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -521,10 +583,12 @@ long& dataIndex)
     //
     if(k!= argCount)
     {
-      cerr << endl << " Error : Incorrect Number of Arguments  " <<  endl <<endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+      std::string errInfo = "Offending operator : ";
+      errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
     }
     //
     // set pointer to return argument
@@ -560,11 +624,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  "
-           <<  endl << endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+ 	  std::string errInfo = "Offending operator : ";
+	  errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -583,11 +648,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  "
-           <<  endl <<endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+      std::string errInfo = "Offending operator : ";
+      errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -632,10 +698,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  " <<  endl <<endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+ 	  std::string errInfo = "Offending operator : ";
+	  errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -682,11 +750,12 @@ long& dataIndex)
     //
     if((i+2) >= iend)
     {
-      cerr << endl << " Error : Incorrect Number of Arguments  "
-           <<  endl << endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;	
+ 	    std::string errInfo = "Offending operator : ";
+	    errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+        SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+        errorHandler();
+        throw symFunException;
+        return 1;
     }
     //
     //#############################################################################
@@ -696,11 +765,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  "
-           <<  endl << endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+ 	  std::string errInfo = "Offending operator : ";
+	  errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -719,11 +789,12 @@ long& dataIndex)
       {
       if(expressionCode[j] != VAR)
       {
-      cerr << endl << " Error : Incorrect Number of Arguments  "
-           <<  endl <<endl;
-      cerr << " Offending Operator :  "
-      << opLib->getOperatorSymbol(expressionCode[i+1]) << endl;
-      errorHandler(); return 1;
+ 	  std::string errInfo = "Offending operator : ";
+	  errInfo            += opLib->getOperatorSymbol(expressionCode[i+1]);
+      SymFunException symFunException("Incorrect Number of Arguments", errInfo,"");
+      errorHandler();
+      throw symFunException;
+      return 1;
       }
       else
       {
@@ -896,9 +967,10 @@ long* expressionCode,long& expressionCodeSize)
     //
     if(checkFlag != 1)
     {
-    cerr << endl << " Error : Illegal Symbol  " <<  endl <<endl;
-    cerr << " Offending Symbol :  " << Stoken << endl;
-    errorHandler();  return 1;
+    SymFunException symFunException("Illegal Symbol",Stoken,"");
+    errorHandler();
+    throw symFunException;
+    return 1;
     }
     }
 //
@@ -1008,9 +1080,10 @@ long* expressionCode,long& expressionCodeSize)
     }
     else
     {
-    cerr << endl << " Error : Illegal Symbol  " <<  endl <<endl;
-    cerr << " Offending Symbol :  " << Stoken << endl;
-    errorHandler();  return 1;
+    SymFunException symFunException("Illegal Symbol",Stoken,"");
+    errorHandler();
+    throw symFunException;
+    return 1;
     }
  //
  // update token pointer
@@ -1115,10 +1188,12 @@ int expressionTransform::separateIntoTokens(char* sIn, char* S)
         || ((int(sInput[i]) >= 97)&&(int(sInput[i]) <= 122))
      )
      {
-     cerr << endl << " Error : Illegal Symbol  " <<  endl <<endl;
-     cerr << " Offending String :  " << sIn << endl << endl;
-     cerr << " Offending Symbol :  " << sInput[i] << endl;
-     errorHandler();  return 1;
+     std::string symbol(1,sInput[i]);
+     delete [] sInput;
+     SymFunException symFunException("Illegal Symbol",symbol,sIn);
+     errorHandler();
+     throw symFunException;
+     return 1;
      }
 //
 //  Insert Space
@@ -1129,10 +1204,12 @@ int expressionTransform::separateIntoTokens(char* sIn, char* S)
     }
     else
     {
-    cerr << endl << " Error : Illegal Symbol  " <<  endl <<endl;
-    cerr << " Offending String :  " << sIn << endl << endl;
-    cerr << " Offending Symbol :  " << sInput[i] << endl;
-    errorHandler();  return 1;
+    std::string symbol(1,sInput[i]);
+    delete [] sInput;
+    SymFunException symFunException("Illegal Symbol",symbol,sIn);
+    errorHandler();
+    throw symFunException;
+    return 1;
     }
 
     }

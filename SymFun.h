@@ -19,13 +19,13 @@ using namespace std;
 #ifndef  __SYMBOLIC_FUNCTION__
 #define  __SYMBOLIC_FUNCTION__
 
-#include "symfunimpexp.h"
+#include "SymFunException.h"
 
 #ifndef  __EXPRESSION_TRANSFORM__
 class expressionTransform;
 #endif
 
-class __IMPEXP__ SymFun
+class  SymFun
 {
 
 public  :
@@ -164,7 +164,7 @@ public  :
 
     void operator=(const SymFun& F);
 
-	 __IMPEXP__ friend ostream& operator <<(ostream& out_stream, const SymFun& F);
+	friend ostream& operator <<(ostream& out_stream, const SymFun& F);
 
     char*  getConstructorString() const;
     int    getVariableCount() const;

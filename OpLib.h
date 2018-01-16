@@ -8,9 +8,8 @@
 //
 #ifndef  __OPERATOR_LIB__
 #define  __OPERATOR_LIB__
-#include "symfunimpexp.h"
 
-class __IMPEXP__ CAMoperatorLib
+class  CAMoperatorLib
 {
 
 public :

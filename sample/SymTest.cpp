@@ -8,9 +8,12 @@
 #include <cstdlib>
 #include <string>
 #include <cstring>
+#include <stdexcept>
 using namespace std;
 
-#include "symfun.h"
+#include <SymFun.h>
+
+
 //
 //######################################################################
 //
@@ -43,30 +46,38 @@ using namespace std;
 int main()
 {
     std::string functionString;       // STL string to hold function specification
+
+    SymFun F;                         // create CAMsymbolicFunction instance
+    const char*V [] = {"x","y"};      // x,y  = independent variables
 //
 //  Obtain Function Input 
 //
-    cout << "Enter f(x,y)   : ";
+    bool repeatFlag = true;
+    int errorFlag   = 0;
 
+    while(repeatFlag)
+    {
+    cout << "Enter f(x,y)   : ";
     getline(cin,functionString,'\n');  //     : stop reading at newline  
 //
 //  Echo input
 //
     cout << endl;
     cout << "Function Input : " << functionString.c_str( ) << endl << endl;
-//
-    CAMsymbolicFunction F;     // create CAMsymbolicFunction instance
-    
-    const char*V [] = {"x","y"};     // x,y  = independent variables
+
     
     // initialize CAMsymbolicFunction 
 
-    int errorFlag   = F.initialize(V,2,functionString.c_str());  
-    
-    if(errorFlag != 0) // interrogate
-    {                                                
-     cout << "Error in Function Initialization " << endl;
-     exit(1);
+    try
+	{
+    errorFlag = F.initialize(V,2,functionString.c_str());
+
+	if(errorFlag == 0) repeatFlag = false;}
+    catch (const SymFunException& e)
+	{
+    	cout << e.what() << endl;
+	}
+
     }
 
     double x;  

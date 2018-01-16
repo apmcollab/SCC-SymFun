@@ -8,13 +8,13 @@
 //
 #ifndef  __EXPRESSION_TRANSFORM__
 #define  __EXPRESSION_TRANSFROM__
-#include "symfunimpexp.h"
+
 
 #ifndef  _OPERATOR_LIB__
 class CAMoperatorLib;
 #endif
 
-class __IMPEXP__ expressionTransform
+class  expressionTransform
 {
     public :
 
@@ -75,6 +75,7 @@ class __IMPEXP__ expressionTransform
     long* execArray, long& execIndex, long& dIndex);
     
     void errorHandler();
+
 };
 #endif
 

@@ -14,10 +14,9 @@
 #ifndef __CAMSYMEXIT__
 #define __CAMSYMEXIT__
 
-#include "symfunimpexp.h"
 
-void __IMPEXP__ CAMsymExit();
-void __IMPEXP__ CAMsymExit(char* ErrorMessage);
+void  CAMsymExit();
+void  CAMsymExit(char* ErrorMessage);
 
 #ifdef __BCPLUSPLUS__
 

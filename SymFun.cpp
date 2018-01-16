@@ -1,3 +1,4 @@
+
 //
 //##################################################################
 //                CAM SYMBOLIC FUNCTION
@@ -44,7 +45,7 @@ cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include "symfun.h"
+#include "SymFun.h"
 #include "symexit.h"
 #include "exptrans.h"
 #include "rOpLib.h"

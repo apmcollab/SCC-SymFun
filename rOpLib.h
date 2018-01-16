@@ -7,9 +7,8 @@
 #ifndef  __REAL_OPERATOR_LIB__
 #define  __REAL_OPERATOR_LIB__
 #include "OpLib.h"
-#include "symfunimpexp.h"
 
-class __IMPEXP__ CAMrealOperatorLib : public CAMoperatorLib
+class  CAMrealOperatorLib : public CAMoperatorLib
 {
 
 public :
