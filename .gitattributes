@@ -3,4 +3,5 @@
 .gitignore export-ignore
 .project   export-ignore
 .gitattributes export-ignore
+.gitignore merge=ours
 
