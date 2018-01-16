@@ -1,6 +1,3 @@
-.project
-.pydevproject
-.cproject
 lib
 _release*
 _debug*
