@@ -6,10 +6,10 @@
 //
 #ifndef  __REAL_OPERATOR_LIB__
 #define  __REAL_OPERATOR_LIB__
-#include "OpLib.h"
-#include "symfunimpexp.h"
-
-class __IMPEXP__ CAMrealOperatorLib : public CAMoperatorLib
+#include "OperatorLib.h"
+namespace SCC
+{
+class  RealOperatorLib : public SCC::OperatorLib
 {
 
 public :
@@ -75,5 +75,6 @@ public :
     static int   ArgCount[];
     static void* FunctionArray[];
 };
+}
 #endif
 

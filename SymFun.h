@@ -19,13 +19,16 @@ using namespace std;
 #ifndef  __SYMBOLIC_FUNCTION__
 #define  __SYMBOLIC_FUNCTION__
 
-#include "symfunimpexp.h"
+#include "SymFunException.h"
+
+namespace SCC
+{
 
 #ifndef  __EXPRESSION_TRANSFORM__
-class expressionTransform;
+class ExpressionTransform;
 #endif
 
-class __IMPEXP__ SymFun
+class  SymFun
 {
 
 public  :
@@ -164,7 +167,7 @@ public  :
 
     void operator=(const SymFun& F);
 
-	 __IMPEXP__ friend ostream& operator <<(ostream& out_stream, const SymFun& F);
+	friend ostream& operator <<(ostream& out_stream, const SymFun& F);
 
     char*  getConstructorString() const;
     int    getVariableCount() const;
@@ -216,9 +219,9 @@ public  :
     int create(const char**V, int Vcount, const char**C, int Ccount, 
                double const* Cvalues, char const* S);
 
-    void        initializeEvaluationData(const expressionTransform& T);
-    void        initializeExecutionArray(const expressionTransform& T);
-    void        setConstantEvaluationData();
+    void  initializeEvaluationData(const SCC::ExpressionTransform& T);
+    void  initializeExecutionArray(const SCC::ExpressionTransform& T);
+    void  setConstantEvaluationData();
 
 
     void** LibFunctions;
@@ -228,7 +231,7 @@ public  :
     /* void createCcode(); // experimenting 02/19/07 */
 
 };
-
+}
 #endif
 
 

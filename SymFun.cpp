@@ -1,3 +1,4 @@
+
 //
 //##################################################################
 //                CAM SYMBOLIC FUNCTION
@@ -44,10 +45,10 @@ cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include "symfun.h"
-#include "symexit.h"
-#include "exptrans.h"
-#include "rOpLib.h"
+
+#include "SymFun.h"
+#include "ExpressionTransform.h"
+#include "RealOperatorLib.h"
 //
 //##################################################################
 //                      CONSTRUCTORS
@@ -57,7 +58,7 @@ cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0
   Creates a "null" SymFun. The SymFun is initialized
   with the initialize member functions.
 */
-SymFun::SymFun()
+SCC::SymFun::SymFun()
 {
     constructorString = 0;
 
@@ -82,7 +83,7 @@ SymFun::SymFun()
 /**
   Copy constructor.
 */
-SymFun::SymFun(const SymFun& F)
+SCC::SymFun::SymFun(const SymFun& F)
 {
 //
 //  Null initializers
@@ -170,7 +171,7 @@ SymFun::SymFun(const SymFun& F)
     strcpy(sNames[i],F.sNames[i]);
     }
 
-    LibFunctions       = CAMrealOperatorLib::getFunctionArrayPtr();
+    LibFunctions       = RealOperatorLib::getFunctionArrayPtr();
 }
 /**
 Creates a SymFun in one variable, x, where the function is
@@ -180,7 +181,7 @@ fails, program execution stops and an error message is output.
 @arg S: Null terminated character string in the variable x that 
 specifies the function.
 */
-SymFun::SymFun(char const* S)
+SCC::SymFun::SymFun(char const* S)
 {
     const char* V []      = {"x"};
     int Vcount            = 1;
@@ -213,7 +214,7 @@ SymFun F(V,Vcount,S); // initialize instance
 cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0,3.0) 
 \endcode
 */
-SymFun::SymFun(const char** V, int Vcount, const char* S)
+SCC::SymFun::SymFun(const char** V, int Vcount, const char* S)
 {
 
     const char** C        = 0;
@@ -265,13 +266,13 @@ Sample:
 \endcode
 */
 
-SymFun::SymFun(const char** V, int Vcount, const char** C,
+SCC::SymFun::SymFun(const char** V, int Vcount, const char** C,
 int Ccount, double const* Cvalues, char const* S)
 {
     create(V,Vcount,C,Ccount, Cvalues, S);
 }
 
-int SymFun::create(const char** V, int Vcount, const char** C,
+int SCC::SymFun::create(const char** V, int Vcount, const char** C,
 int Ccount, double const* Cvalues, char const* S)
 {
 //
@@ -301,8 +302,8 @@ int Ccount, double const* Cvalues, char const* S)
     constantValues[i] = Cvalues[i];
     }
 
-    CAMrealOperatorLib L;
-      expressionTransform T;
+    RealOperatorLib L;
+      ExpressionTransform T;
     int expReturn;
 
     expReturn =  T.initialize(variableNames, variableCount, constantNames,
@@ -329,7 +330,7 @@ int Ccount, double const* Cvalues, char const* S)
     strcpy(sNames[i],TsNames[i]);
     }
 
-    LibFunctions       = CAMrealOperatorLib::getFunctionArrayPtr();
+    LibFunctions       = RealOperatorLib::getFunctionArrayPtr();
     return 0;
 }
 //
@@ -338,12 +339,12 @@ int Ccount, double const* Cvalues, char const* S)
 //##################################################################
 //
 
-SymFun::~SymFun()
+SCC::SymFun::~SymFun()
 {
     destroy();
 }
 
-void SymFun::destroy()
+void SCC::SymFun::destroy()
 {
     int i;
     if(constructorString != 0) delete [] constructorString;
@@ -400,7 +401,7 @@ void SymFun::destroy()
   Initializes a SymFun instance
   to a null SymFun.
 */
-int SymFun::initialize()
+int SCC::SymFun::initialize()
 {
     destroy();
     return 0;
@@ -418,7 +419,7 @@ specifies the function.
 @returns 0 (= no error) 1 (= error). 
 */
 
-int SymFun::initialize(char const* S)
+int SCC::SymFun::initialize(char const* S)
 {
     destroy();
     const char*V []  = {"x"};
@@ -467,7 +468,7 @@ cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0
 */
 
 
-int SymFun::initialize(const char** V, int Vcount, char const* S)
+int SCC::SymFun::initialize(const char** V, int Vcount, char const* S)
 {
     destroy();
     const char** C  = 0;
@@ -527,7 +528,7 @@ Sample:
          << f(1.0) << endl;
 \endcode
 */
-int  SymFun::initialize(const char** V, int Vcount, const char** C,
+int  SCC::SymFun::initialize(const char** V, int Vcount, const char** C,
 int Ccount, double const* Cvalues, char const* S)
 {
     destroy();
@@ -541,7 +542,7 @@ int Ccount, double const* Cvalues, char const* S)
   Initializes the SymFun instance with F
 */
 
-int SymFun::initialize(const SymFun& F)
+int SCC::SymFun::initialize(const SymFun& F)
 {
     destroy();
 //
@@ -608,18 +609,18 @@ int SymFun::initialize(const SymFun& F)
     strcpy(sNames[i],F.sNames[i]);
     }
 
-    LibFunctions       = CAMrealOperatorLib::getFunctionArrayPtr();
+    LibFunctions       = RealOperatorLib::getFunctionArrayPtr();
     return 0;
 }
 /** Assignment operator. The instance is intialized using F. The
     data associated with the original instance is destroyed.  
 */
-void SymFun::operator=(const SymFun& F)
+void SCC::SymFun::operator=(const SymFun& F)
 {
     initialize(F);
 }
 
-long SymFun::getSymbolCount() const
+long SCC::SymFun::getSymbolCount() const
 {
     return symbolCount;
 }
@@ -632,7 +633,7 @@ long SymFun::getSymbolCount() const
  Outputs the initialization string, the variable names, the symbolic 
  constant names and the symbolic constant values.
 */
-ostream&  operator <<(ostream& out_stream, const SymFun& F)
+ostream&  operator <<(ostream& out_stream, const SCC::SymFun& F)
 {
     int i;
      out_stream << F.getConstructorString() << endl;
@@ -663,14 +664,14 @@ return out_stream;
  Returns the string used to initialize the SymFun.
  */
  
-char* SymFun::getConstructorString() const
+char* SCC::SymFun::getConstructorString() const
 {
     return constructorString;
 }
 /**
  Returns the number of variables associated with the SymFun.
 */
-int SymFun::getVariableCount() const
+int SCC::SymFun::getVariableCount() const
 {
       return variableCount;
 }
@@ -679,7 +680,7 @@ int SymFun::getVariableCount() const
 Returns the name of the ith variable associated with the 
 SymFun.
 */
-char*  SymFun::getVariableName(int i) const
+char*  SCC::SymFun::getVariableName(int i) const
 {
       return variableNames[i];
 }
@@ -687,7 +688,7 @@ char*  SymFun::getVariableName(int i) const
 Returns the number of symbolic constants associated with the 
 SymFun.
  */
-int SymFun::getConstantCount() const
+int SCC::SymFun::getConstantCount() const
 {
       return constantCount;
 }
@@ -695,7 +696,7 @@ int SymFun::getConstantCount() const
  Returns the name of the ith symbolic constant associated 
  with the SymFun.
 */
-char*  SymFun::getConstantName(int i) const
+char*  SCC::SymFun::getConstantName(int i) const
 {
       return constantNames[i];
 }
@@ -703,7 +704,7 @@ char*  SymFun::getConstantName(int i) const
  Returns the value of the ith symbolic constant 
  associated with the SymFun.
 */
-double  SymFun::getConstantValue(int i) const
+double  SCC::SymFun::getConstantValue(int i) const
 {
       return constantValues[i];
 }
@@ -714,7 +715,7 @@ double  SymFun::getConstantValue(int i) const
  @arg S: Character string with name of the symbolic constant.
  @arg x: Double value specifying the new value of the constant.
 */
-void  SymFun::setConstantValue(const char* S,double x)
+void  SCC::SymFun::setConstantValue(const char* S,double x)
 {
     int i;
     for(i =0; i < constantCount; i++)
@@ -724,21 +725,21 @@ void  SymFun::setConstantValue(const char* S,double x)
     setConstantEvaluationData();
 }
 
-char** SymFun::getVariableNamePtr() const
+char** SCC::SymFun::getVariableNamePtr() const
 {
     return variableNames;
 }
 
-char** SymFun::getConstantNamePtr() const
+char** SCC::SymFun::getConstantNamePtr() const
 {
     return constantNames;
 }
 
-double* SymFun::getConstantValuePtr() const
+double* SCC::SymFun::getConstantValuePtr() const
 {
     return  constantValues;
 }
-void  SymFun::initializeEvaluationData(const expressionTransform& T)
+void  SCC::SymFun::initializeEvaluationData(const ExpressionTransform& T)
 {
     long symbolCount = T.getSymbolCount();
     char**sNames     = T.getSymbolNamesPtr();
@@ -756,7 +757,7 @@ void  SymFun::initializeEvaluationData(const expressionTransform& T)
 
 }
 
-void  SymFun::initializeExecutionArray(const expressionTransform& T)
+void  SCC::SymFun::initializeExecutionArray(const ExpressionTransform& T)
 {
     long* executionArrayPtr = T.getExecutionArrayPtr();
     int i;
@@ -765,7 +766,7 @@ void  SymFun::initializeExecutionArray(const expressionTransform& T)
     }
 }
 
-void  SymFun::setConstantEvaluationData()
+void  SCC::SymFun::setConstantEvaluationData()
 {
     int i; int j;
 
@@ -777,7 +778,7 @@ void  SymFun::setConstantEvaluationData()
  Returns the value of the SymFun
  using the variable value x. 
 */
-double SymFun::operator()(double x) const
+double SCC::SymFun::operator()(double x) const
 {
     if(variableCount != 1) argError(1, variableCount);
     evaluationData[0] = x;
@@ -788,7 +789,7 @@ double SymFun::operator()(double x) const
  Returns the value of the SymFun
  using the variable value (x1,x2). 
 */
-double SymFun::operator()(double x1, double x2) const
+double SCC::SymFun::operator()(double x1, double x2) const
 {
     if(variableCount != 2) argError(2, variableCount);
 
@@ -803,7 +804,7 @@ double SymFun::operator()(double x1, double x2) const
  using the variable value (x1,x2,x3). 
 */
 
-double SymFun::operator()(double x1, double x2, double x3) const
+double SCC::SymFun::operator()(double x1, double x2, double x3) const
 {
      if(variableCount != 3) argError(3, variableCount);
 
@@ -818,7 +819,7 @@ double SymFun::operator()(double x1, double x2, double x3) const
  using the variable value (x1,x2,x3,x4). 
 */
 
-double SymFun::operator()(double x1, double x2, double x3, double x4) const
+double SCC::SymFun::operator()(double x1, double x2, double x3, double x4) const
 {
      if(variableCount != 4) argError(4, variableCount);
 
@@ -834,7 +835,7 @@ double SymFun::operator()(double x1, double x2, double x3, double x4) const
  n variable values in the <vector>double x.
  @arg x vector<double> array of values
 */
-double SymFun::operator()(const vector<double>& x) const
+double SCC::SymFun::operator()(const vector<double>& x) const
 {
 	int n = x.size();
     if(variableCount != n) argError(n, variableCount);
@@ -850,7 +851,7 @@ double SymFun::operator()(const vector<double>& x) const
  @arg x poiner to a double array
  @arg n the number of elements in x
 */
-double SymFun::operator()(double*x, int n) const
+double SCC::SymFun::operator()(double*x, int n) const
 {
      if(variableCount != n) argError(n, variableCount);
 
@@ -859,14 +860,17 @@ double SymFun::operator()(double*x, int n) const
     return evaluate();
 }
 
-void SymFun::argError(int argC, int vCount)
+void SCC::SymFun::argError(int argC, int vCount)
 {
+	#ifdef _DEBUG
     cerr << " Incorrect Number of Arguments in SymFun " << endl;
     cerr << " Called with " << argC << " arguments, expecting " << vCount;
-    CAMsymExit();
+  	cerr << " Fatal Error : Program Stopped " << endl;
+	exit(1);
+    #endif
 }
 
-double SymFun::evaluate() const
+double SCC::SymFun::evaluate() const
 {
     int j;
     double* argData[10];   // limit of 10 args for now
@@ -891,9 +895,9 @@ double SymFun::evaluate() const
 }
 
 /*
- void SymFun::createCcode()
+ void SCC::SymFun::createCcode()
  {
-    CAMrealOperatorLib L;
+    RealOperatorLib L;
     
     int binaryPlusIndex   = L.getBinaryOperatorIndex("+");
     int binaryMinusIndex  = L.getBinaryOperatorIndex("-");

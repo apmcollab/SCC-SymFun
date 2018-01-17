@@ -8,9 +8,9 @@
 //
 #ifndef  __OPERATOR_LIB__
 #define  __OPERATOR_LIB__
-#include "symfunimpexp.h"
-
-class __IMPEXP__ CAMoperatorLib
+namespace SCC
+{
+class  OperatorLib
 {
 
 public :
@@ -24,5 +24,6 @@ public :
     virtual int   getOperatorCount(){return 0;};
     virtual int   getOperatorArgCount(int index){return 0;};
 };
+}
 #endif
 
