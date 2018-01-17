@@ -1,6 +1,6 @@
 //
 //##################################################################
-//  		   CLASS  expressionTransform  Header
+//  		   CLASS  ExpressionTransform  Header
 //##################################################################
 //
 //	                               
@@ -9,28 +9,30 @@
 #ifndef  __EXPRESSION_TRANSFORM__
 #define  __EXPRESSION_TRANSFROM__
 
+namespace SCC
+{
 
 #ifndef  _OPERATOR_LIB__
-class CAMoperatorLib;
+class OperatorLib;
 #endif
 
-class  expressionTransform
+class  ExpressionTransform
 {
     public :
 
-    expressionTransform();
-    expressionTransform(const expressionTransform& E);
+    ExpressionTransform();
+    ExpressionTransform(const ExpressionTransform& E);
  
-    expressionTransform(char** V, int Vcount, char* S, CAMoperatorLib* O);
-    expressionTransform(char** V, int Vcount, char** C, int Ccount,
-                        char* S,CAMoperatorLib* O);
+    ExpressionTransform(char** V, int Vcount, char* S, OperatorLib* O);
+    ExpressionTransform(char** V, int Vcount, char** C, int Ccount,
+                        char* S,OperatorLib* O);
 
-    ~expressionTransform();
+    ~ExpressionTransform();
 
     int initialize();
-    int initialize(char** V, int Vcount, char* S, CAMoperatorLib* O);
+    int initialize(char** V, int Vcount, char* S, OperatorLib* O);
     int initialize(char** V, int Vcount, char** C, int Ccount, char* S,
-                    CAMoperatorLib* O);
+                    OperatorLib* O);
 
     void destroy();
 
@@ -60,7 +62,7 @@ class  expressionTransform
 
     long        evaluationDataSize;
 
-    CAMoperatorLib* opLib;
+    SCC::OperatorLib* opLib;
 
     enum{DELIM = -2, VAR   =-1, NOOP   = 0};
     enum{LEFTP = -1, COMMA = 0, RIGHTP = 1};
@@ -77,5 +79,6 @@ class  expressionTransform
     void errorHandler();
 
 };
+} // namespace
 #endif
 

@@ -4,7 +4,8 @@
 
 #ifndef  _SymFunException_
 #define  _SymFunException_
-
+namespace SCC
+{
 class SymFunException : public std::runtime_error
 {
 public:
@@ -46,5 +47,5 @@ public:
 
   std::string errorReturn;
 };
-
+}
 #endif

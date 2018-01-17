@@ -1,3 +1,4 @@
+
 //
 //##################################################################
 //  		    CLASS  EXPRESSION_TRANSFORM  SOURCE
@@ -15,18 +16,9 @@
 #include <cstring>
 using namespace std;
 
-#include "exptrans.h"
-#include "OpLib.h"
+#include "ExpressionTransform.h"
+#include "OperatorLib.h"
 #include "SymFunException.h"
-
-
-/*
-try {
-    ComplexOperationThatCouldFailABunchOfWays();
-} catch (std::exception& e) {
-    cerr << e.what() << endl;
-}
-*/
 
 
 //
@@ -45,7 +37,7 @@ try {
 //##################################################################
 //
 //
-expressionTransform::expressionTransform()
+SCC::ExpressionTransform::ExpressionTransform()
 {
    variableCount = 0;
    constantCount = 0;
@@ -62,7 +54,7 @@ expressionTransform::expressionTransform()
 
 }
 
-expressionTransform::expressionTransform(const expressionTransform& E)
+SCC::ExpressionTransform::ExpressionTransform(const ExpressionTransform& E)
 {
 	variableCount = E.variableCount;
 	constantCount = E.constantCount;
@@ -89,8 +81,8 @@ expressionTransform::expressionTransform(const expressionTransform& E)
 }
 
 
-expressionTransform::expressionTransform(char** V, int Vcount, char* S,
-CAMoperatorLib* OLib)
+SCC::ExpressionTransform::ExpressionTransform(char** V, int Vcount, char* S,
+OperatorLib* OLib)
 {
     char** C   = 0;
     int Ccount = 0;
@@ -98,8 +90,8 @@ CAMoperatorLib* OLib)
 	createTransform(V, Vcount, C, Ccount, S);
 }
 
-expressionTransform::expressionTransform(char** V, int Vcount,
-char** C, int Ccount, char* S, CAMoperatorLib* OLib)
+SCC::ExpressionTransform::ExpressionTransform(char** V, int Vcount,
+char** C, int Ccount, char* S, OperatorLib* OLib)
 {
     opLib      = OLib;
 	createTransform(V, Vcount, C, Ccount, S);
@@ -109,12 +101,12 @@ char** C, int Ccount, char* S, CAMoperatorLib* OLib)
 //  		            DESTRUCTOR
 //##################################################################
 //
-expressionTransform::~expressionTransform()
+SCC::ExpressionTransform::~ExpressionTransform()
 {
  	destroy();
 }
 
-void expressionTransform::destroy()
+void SCC::ExpressionTransform::destroy()
 {
    if(executionArray != 0) delete [] executionArray;
 
@@ -141,14 +133,14 @@ void expressionTransform::destroy()
 //  		               INITIALIZE
 //##################################################################
 //
-int expressionTransform::initialize()
+int SCC::ExpressionTransform::initialize()
 {
     destroy();
     return 0;
 }
 
-int expressionTransform::initialize(char** V, int Vcount, char* S,
-CAMoperatorLib* OLib)
+int SCC::ExpressionTransform::initialize(char** V, int Vcount, char* S,
+OperatorLib* OLib)
 {
     destroy();
     char** C   = 0;
@@ -159,8 +151,8 @@ CAMoperatorLib* OLib)
     return initReturn;
 }
 
-int expressionTransform::initialize(char** V, int Vcount, char** C, int Ccount, char* S,
-CAMoperatorLib* OLib)
+int SCC::ExpressionTransform::initialize(char** V, int Vcount, char** C, int Ccount, char* S,
+OperatorLib* OLib)
 {
     destroy();
     opLib       = OLib;
@@ -172,7 +164,7 @@ CAMoperatorLib* OLib)
 //  		            CREATE_TRANSFROM
 //##################################################################
 //
-int expressionTransform::createTransform(char** V, int Vcount, char** C,
+int SCC::ExpressionTransform::createTransform(char** V, int Vcount, char** C,
 		int Ccount, char* expressionString)
 {
 //
@@ -508,7 +500,7 @@ int expressionTransform::createTransform(char** V, int Vcount, char** C,
 //##################################################################
 //
 
-int expressionTransform::setupEvaluation(long* expressionCode,
+int SCC::ExpressionTransform::setupEvaluation(long* expressionCode,
 int istart, int iend,long* executionArray,long& executionIndex,
 long& dataIndex)
 {
@@ -827,7 +819,7 @@ long& dataIndex)
 //  		            ENCODE EXPRESSION
 //##################################################################
 //
-int expressionTransform::encodeExpression(char* S,long Ssize,
+int SCC::ExpressionTransform::encodeExpression(char* S,long Ssize,
 char** sNames, long vCount, long cCount, long sCount,
 long* expressionCode,long& expressionCodeSize)
 {
@@ -1099,7 +1091,7 @@ long* expressionCode,long& expressionCodeSize)
 //  		        SEPARATE_INTO_TOKENS
 //##################################################################
 //
-int expressionTransform::separateIntoTokens(char* sIn, char* S)
+int SCC::ExpressionTransform::separateIntoTokens(char* sIn, char* S)
 {
 //
 //  This routine takes the string sIn and decomposes it into
@@ -1226,7 +1218,7 @@ int expressionTransform::separateIntoTokens(char* sIn, char* S)
 //  		        Error Handler
 //##################################################################
 //
-void expressionTransform::errorHandler()
+void SCC::ExpressionTransform::errorHandler()
 {
     destroy();
 }

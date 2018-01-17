@@ -53,18 +53,34 @@
 	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
-			<target name="SymFun" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+			<target name="SymFun_Release" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>make</buildCommand>
 				<buildArguments>-f SymFunLib.mk</buildArguments>
-				<buildTarget>debug</buildTarget>
+				<buildTarget>release</buildTarget>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>false</useDefaultCommand>
 				<runAllBuilders>true</runAllBuilders>
 			</target>
-			<target name="SymFunTest" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+			<target name="SymFunTest_Debug" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>g++</buildCommand>
 				<buildArguments>-g -I/home/anderson/SCC/SymFun/ -L/home/anderson/SCC/SymFun/lib sample/SymTest.cpp     -lSymFun_debug  -o ./sample/SymTest.exe</buildArguments>
 				<buildTarget/>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>false</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+			<target name="SymFunTest_Release" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>g++</buildCommand>
+				<buildArguments>-O2   -I/home/anderson/SCC/SymFun/ -L/home/anderson/SCC/SymFun/lib sample/SymTest.cpp     -lSymFun  -o ./sample/SymTest.exe</buildArguments>
+				<buildTarget/>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>false</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+			<target name="SymFun_Debug" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments>-f SymFunLib.mk</buildArguments>
+				<buildTarget>debig</buildTarget>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>false</useDefaultCommand>
 				<runAllBuilders>true</runAllBuilders>
