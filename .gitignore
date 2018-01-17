@@ -1,7 +1,3 @@
-.project
-.settings
-.pydevproject
-.cproject
 *.exe
 lib
 _release*
