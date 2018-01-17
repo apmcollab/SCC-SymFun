@@ -1,4 +1,4 @@
 *.exe
-lib
+lib/*.a
 _release*
 _debug*
