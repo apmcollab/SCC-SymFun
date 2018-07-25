@@ -2,3 +2,4 @@
 lib/*.a
 _release*
 _debug*
+.settings/language.settings.xml
