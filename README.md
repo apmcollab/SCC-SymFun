@@ -8,7 +8,7 @@ GNU make
 
 ### Versioning
 
-Release : 18.07.25
+Release : 18.08.31
 
 ### Authors
 
@@ -19,6 +19,7 @@ Chris Anderson
 GPLv3  For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
 
 ### Acknowledgements
+
 
 
 
