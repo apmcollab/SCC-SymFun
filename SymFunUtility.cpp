@@ -9,8 +9,8 @@
 #define _CRT_SECURE_NO_DEPRECATE   // complain about use of strcpy.
 #endif 
 
-#include "SymFun/SymFun.h"
-#include "SymFun/RealOperatorLib.h"
+#include "SymFun.h"
+#include "RealOperatorLib.h"
 
 #include <sstream>
 

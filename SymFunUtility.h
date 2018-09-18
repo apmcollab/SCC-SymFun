@@ -15,8 +15,8 @@
 //
 // Version 1/22/2009              Chris Anderson 5/15/01 (C) UCLA
 
-#include "SymFun/SymFun.h"
-#include "SymFun/RealOperatorLib.h"
+#include "SymFun.h"
+#include "RealOperatorLib.h"
 
 // Warning this doesn't differentiate properly functions whose derivative is constant.
 
