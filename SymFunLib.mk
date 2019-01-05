@@ -25,7 +25,6 @@ MAKEFLAGS := $(sort $(MAKEFLAGS))
 endif
 
 ifeq ($(MAKECMDGOALS),release)
-
 CFLAGS      :=-O2  -fno-gcse -fno-optimize-sibling-calls -Wno-write-strings
 CXXFLAGS    :=-O2  -fno-gcse -fno-optimize-sibling-calls -Wno-write-strings
 CDEFINES    += 
