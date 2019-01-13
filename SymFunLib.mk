@@ -1,8 +1,6 @@
 #
-# This makefile builds the XML_ParameterList support library. 
+# This makefile builds the SCC::SynFun support library. 
 #
-#
-
 SHELL=/bin/sh
 
 # Parameters for library construction script 

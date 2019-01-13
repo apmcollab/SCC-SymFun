@@ -1,26 +1,45 @@
 
 //
 //##################################################################
-//  		       CAM SYMBOLIC FUNCTION
+//  		       SYMFUN SYMBOLIC FUNCTION UTILITIES
 //##################################################################
 //
-//	                                
+//
+// Beta version of SymFun utilities. In particular, a member function to evaluate
+// the derivative of a SymFun instance and return the result as a SymFun instance.
+//
+// Known problems: differentiating a constant function isn't done correctly.
+//
+// Author: Chris Anderson
+// (C) UCLA 2012
 //
 //
-// Header for utility function that computes the symbolic derivative
-// of a CAMsymbolic function instance. 
+// Version   1/22/2009              Chris Anderson 5/15/01 (C) UCLA
+// Version : 03/19/2018
 //
-// Beta Version : Be aware that this routine has not been
-// completely tested. 
-//
-// Version 1/22/2009              Chris Anderson 5/15/01 (C) UCLA
+/*
+#############################################################################
+#
+# Copyright 1996-2019 Chris Anderson
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For a copy of the GNU General Public License see
+# <http://www.gnu.org/licenses/>.
+#
+#############################################################################
+*/
 
 #include "SymFun.h"
 #include "RealOperatorLib.h"
-
-// Warning this doesn't differentiate properly functions whose derivative is constant.
-
-// Version : 03/19/2018
 
 #include <string>
 #include <cstring>

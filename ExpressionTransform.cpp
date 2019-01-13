@@ -4,13 +4,33 @@
 //  		    CLASS  EXPRESSION_TRANSFORM  SOURCE
 //##################################################################
 //
-//	            Chris Anderson 9/10/96 (C) UCLA
-//
+// Chris Anderson 9/10/96 (C) UCLA
+/*
+#############################################################################
+#
+# Copyright 1996-2019 Chris Anderson
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For a copy of the GNU General Public License see
+# <http://www.gnu.org/licenses/>.
+#
+#############################################################################
+*/
+
 #ifdef _MSC_VER                   // Add so Visual-Studio doesn't
 #define _CRT_SECURE_NO_DEPRECATE   // complain about use of strcpy.
 #endif                            
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <cstring>

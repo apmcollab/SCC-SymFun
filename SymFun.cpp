@@ -1,10 +1,10 @@
-
 //
 //##################################################################
-//                CAM SYMBOLIC FUNCTION
+//                SYMFUN SYMBOLIC FUNCTION
 //##################################################################
 //
-//                                     Chris Anderson 7/21/97 (C) UCLA
+// Chris Anderson 7/21/97 (C) UCLA
+//
 /*! 
     \class SymFun
     \brief An instance of class SymFun implements a
@@ -35,20 +35,42 @@ cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0
     @version 01/22/09
     
 */
+
+/*
+#############################################################################
+#
+# Copyright 1996-2019 Chris Anderson
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For a copy of the GNU General Public License see
+# <http://www.gnu.org/licenses/>.
+#
+#############################################################################
+*/
 #ifdef _MSC_VER                   // Add so Visual-Studio doesn't
 #define _CRT_SECURE_NO_DEPRECATE   // complain about use of strcpy.
 #endif 
 
-#include <string>
-#include <stdlib.h>
-#include <stdio.h>
-#include <cstring>
-#include <cstdlib>
-#include <cstdio>
-
 #include "SymFun.h"
 #include "ExpressionTransform.h"
 #include "RealOperatorLib.h"
+
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+using namespace std;
+
+
 //
 //##################################################################
 //                      CONSTRUCTORS

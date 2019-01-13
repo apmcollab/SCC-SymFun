@@ -3,14 +3,33 @@
 //  		       CAM SYMBOLIC FUNCTION
 //##################################################################
 //
-//	                                Chris Anderson 9/10/96 (C) UCLA
+//	Chris Anderson 9/10/96 (C) UCLA
 //
 //
 // CRA 05/15/01 :  Added operator = :  
 // CRA 01/25/07 :  Made constructors/initializers const correct
 //                 and added documentation to the source file. 
 // CRA 02/21/07 :  Additional changes to const. 
-
+/*
+#############################################################################
+#
+# Copyright 1996-2019 Chris Anderson
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For a copy of the GNU General Public License see
+# <http://www.gnu.org/licenses/>.
+#
+#############################################################################
+*/
 #include <iostream>
 #include <functional>
 #include <vector>
