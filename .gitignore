@@ -1,4 +1,6 @@
 *.exe
+*.o
+lib/*.o
 lib/*.a
 _release*
 _debug*
