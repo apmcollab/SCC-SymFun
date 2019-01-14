@@ -1,0 +1,8 @@
+*.exe
+*.o
+lib/*.o
+lib/*.a
+_release*
+_debug*
+.settings/language.settings.xml
+boneyard
