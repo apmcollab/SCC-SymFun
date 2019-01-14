@@ -8,11 +8,11 @@ The SCC::SymFunUtility class has member functions that return derivatives of SCC
 
 ### Prerequisites
 
-GNU make
+c++11
 
 ### Versioning
 
-Release : 18.08.31
+Release : 19.01.14
 
 ### Authors
 
