@@ -13,11 +13,11 @@
     
     The syntax for the initialization string is that of general C++ expressions. 
     The initialization string can contain references to C++ math functions 
-    (those in math.h) as well as symbolic constants. The ^ character can be used
+    (those in cmath) as well as symbolic constants. The ^ character can be used
     to specify exponentiation, e.g. x^2 = x*x.
     
     The () operator is overloaded so the standard functional 
-    evaluation syntax, e.g. f(x), is used to evaluate the CAMsymbolicFuntion instance.
+    evaluation syntax, e.g. f(x), is used to evaluate the SCC::SymFun instance.
     
     Sample Usage:
 \code
