@@ -37,6 +37,10 @@
 #############################################################################
 */
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
 #include "SymFun.h"
 #include "RealOperatorLib.h"
 
@@ -84,7 +88,7 @@ long* evaluationPriority)
     for(i=0; i < symbolCount; i++)
     {
     evaluationStrings[i] = new char[strlen(F.sNames[i])+1];
-    strcpy(evaluationStrings[i],F.sNames[i]);
+    strncpy(evaluationStrings[i],F.sNames[i],strlen(F.sNames[i])+1);
     evaluationPriority[i] = -1;
     }
 //
@@ -218,7 +222,7 @@ long* evaluationPriority)
     }
     }
     evaluationStrings[resultIndex] = new char[strlen((sbuf.str()).c_str()) + 1];
-    strcpy(evaluationStrings[resultIndex],(sbuf.str()).c_str());
+    strncpy(evaluationStrings[resultIndex],(sbuf.str()).c_str(),strlen((sbuf.str()).c_str()) + 1);
 
     sbuf.str("");
     evaluationPriority[resultIndex] = centPriority;
@@ -315,12 +319,12 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     for(i=0; i < symbolCount; i++)
     {
     devaluationStrings[i] = new char[1];
-    strcpy(devaluationStrings[i],"");
+    strncpy(devaluationStrings[i],"",1);
     }
 
     delete [] devaluationStrings[diffIndex];
     devaluationStrings[diffIndex] = new char[2];
-    strcpy(devaluationStrings[diffIndex],"1");
+    strncpy(devaluationStrings[diffIndex],"1",2);
 
     long arg1Index;
     long arg2Index;
@@ -483,11 +487,11 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
            )
     {
 
-    if      (!strcmp(L.Symbols[functionIndex],"sin"))   strcpy(dfunctionString, "cos");
-    else if (!strcmp(L.Symbols[functionIndex],"cos"))   strcpy(dfunctionString,"-sin");
-    else if (!strcmp(L.Symbols[functionIndex],"exp"))   strcpy(dfunctionString,"exp");
-    else if (!strcmp(L.Symbols[functionIndex],"cosh"))  strcpy(dfunctionString,"sinh");
-    else if (!strcmp(L.Symbols[functionIndex],"sinh"))  strcpy(dfunctionString,"cosh");
+    if      (!strcmp(L.Symbols[functionIndex],"sin"))   strncpy(dfunctionString, "cos",4);
+    else if (!strcmp(L.Symbols[functionIndex],"cos"))   strncpy(dfunctionString,"-sin",5);
+    else if (!strcmp(L.Symbols[functionIndex],"exp"))   strncpy(dfunctionString,"exp",4);
+    else if (!strcmp(L.Symbols[functionIndex],"cosh"))  strncpy(dfunctionString,"sinh",5);
+    else if (!strcmp(L.Symbols[functionIndex],"sinh"))  strncpy(dfunctionString,"cosh",5);
 
         if(strlen(devaluationStrings[arg1Index])==0)
         {sbuf << ends;}
@@ -915,7 +919,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
 
     stringSize = (long)strlen((sbuf.str()).c_str());
     devaluationStrings[resultIndex] = new char[stringSize+1];
-    strcpy(devaluationStrings[resultIndex],(sbuf.str()).c_str());
+    strncpy(devaluationStrings[resultIndex],(sbuf.str()).c_str(),stringSize+1);
     sbuf.str("");
 
     executionIndex += argCount;
@@ -959,7 +963,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     // Capture the derivative as the last evaluation string
     //
     char* derivativeString = new char[strlen(dStrings[D.evaluationDataSize-1])+1];
-    strcpy(derivativeString,dStrings[D.evaluationDataSize-1]);
+    strncpy(derivativeString,dStrings[D.evaluationDataSize-1],strlen(dStrings[D.evaluationDataSize-1])+1);
 
     for(i = 0; i < D.evaluationDataSize; i++) {delete [] dStrings[i];}
     delete [] dStrings;
