@@ -64,26 +64,40 @@ public  :
     //
     SymFun(const string& S)
     {
+    	 bool nullInstanceFlag = true;
+    	 destroy(nullInstanceFlag);
     	 initialize(S);
     }
 
     SymFun(const vector<string> V, const string& S)
     {
+    	bool nullInstanceFlag = true;
+    	destroy(nullInstanceFlag);
+
     	initialize(V,S);
     }
 
     SymFun(const vector<string> V, const vector<string> C, const vector<double> Cvalues, const string& S)
     {
+    	bool nullInstanceFlag = true;
+    	destroy(nullInstanceFlag);
+
     	initialize(V,C,Cvalues,S);
     }
 
     int initialize(const string& S)
     {
+    	bool nullInstanceFlag = true;
+    	destroy(nullInstanceFlag);
+
     	return initialize(S.c_str());
     }
 
     int initialize(const vector<string> V, const string& S)
     {
+    	bool nullInstanceFlag = true;
+    	destroy(nullInstanceFlag);
+
     	int Vcount = V.size();
     	vector<const char*> Varray(Vcount);
     	for(int i = 0; i < Vcount; i++)
@@ -95,6 +109,9 @@ public  :
 
     int initialize(const vector<string> V, const vector<string> C, const vector<double> Cvalues, const string& S)
     {
+    	bool nullInstanceFlag = true;
+    	destroy(nullInstanceFlag);
+
     	int Vcount = V.size();
     	vector<const char*> Varray(Vcount);
     	for(int i = 0; i < Vcount; i++)
@@ -234,7 +251,7 @@ public  :
     char**  getConstantNamePtr() const;
     double* getConstantValuePtr() const;
 
-    void destroy();
+    void destroy(bool nullInstanceFlag = false);
     int create(const char**V, int Vcount, const char**C, int Ccount, 
                double const* Cvalues, char const* S);
 

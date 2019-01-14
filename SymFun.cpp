@@ -366,8 +366,32 @@ SCC::SymFun::~SymFun()
     destroy();
 }
 
-void SCC::SymFun::destroy()
+void SCC::SymFun::destroy(bool nullInstanceFlag)
 {
+	if(nullInstanceFlag)
+	{
+    constructorString = 0;
+
+    variableNames     = 0;
+    variableCount     = 0;
+
+    constantNames     = 0;
+    constantCount     = 0;
+    constantValues    = 0;
+
+    symbolCount       = 0;
+    sNames            = 0;
+
+    evaluationData     = 0;
+    evaluationDataSize = 0;
+
+    executionArray     = 0;
+    executionArraySize = 0;
+
+    LibFunctions       = 0;
+    return;
+	}
+
     int i;
     if(constructorString != 0) delete [] constructorString;
 
