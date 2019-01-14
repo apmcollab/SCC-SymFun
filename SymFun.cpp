@@ -19,20 +19,9 @@
     The () operator is overloaded so the standard functional 
     evaluation syntax, e.g. f(x), is used to evaluate the SCC::SymFun instance.
     
-    Sample Usage:
-\code
-int Vcount = 2;                   // number of independent variables
-char*V []  = {"x","y"};           // x,y  = independent variable names
-char*S     = "x^2 + 2*y";         // specify a function 
-     
-SymFun F(V,Vcount,S); // initialize instance
-    
-cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0,3.0) 
-\endcode
-
     @author Chris Anderson
     @date 7/21/97
-    @version 01/22/09
+    @version 01/14/19
     
 */
 
@@ -726,7 +715,7 @@ int SCC::SymFun::getVariableCount() const
 Returns the name of the ith variable associated with the 
 SymFun.
 */
-char*  SCC::SymFun::getVariableName(int i) const
+const char*  SCC::SymFun::getVariableName(int i) const
 {
       return variableNames[i];
 }
@@ -742,7 +731,7 @@ int SCC::SymFun::getConstantCount() const
  Returns the name of the ith symbolic constant associated 
  with the SymFun.
 */
-char*  SCC::SymFun::getConstantName(int i) const
+const char*  SCC::SymFun::getConstantName(int i) const
 {
       return constantNames[i];
 }
@@ -754,8 +743,40 @@ double  SCC::SymFun::getConstantValue(int i) const
 {
       return constantValues[i];
 }
+
+
 /**
- Returns the value of the ith symbolic constant 
+ Returns the value of the specified symbolic constant
+ associated with the SymFun.
+
+ @arg S: Character string with name of the symbolic constant.
+*/
+
+double SCC::SymFun::getConstantValue(const string& S) const
+{
+    return getConstantValue(S.c_str());
+}
+
+/**
+ Returns the value of the specified symbolic constant
+ associated with the SymFun.
+
+ @arg S: Character string with name of the symbolic constant.
+*/
+
+double SCC::SymFun::getConstantValue(const char* S) const
+{
+    int i;
+    for(i =0; i < constantCount; i++)
+    {
+    if(strcmp(S,constantNames[i]) == 0) return constantValues[i];
+    }
+
+    return 0.0;
+}
+
+/**
+ Sets the value of the ith symbolic constant
  associated with the SymFun.
  
  @arg S: Character string with name of the symbolic constant.

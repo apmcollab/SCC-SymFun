@@ -5,17 +5,16 @@
 //##################################################################
 //
 //
-// Beta version of SymFun utilities. In particular, a member function to evaluate
-// the derivative of a SymFun instance and return the result as a SymFun instance.
-//
-// Known problems: differentiating a constant function isn't done correctly.
+// Beta version of SymFun utilities. In particular, this class
+// provides a member function to evaluate the derivative of a SymFun instance and
+// return the result as a SymFun instance.
 //
 // Author: Chris Anderson
 // (C) UCLA 2012
 //
 //
 // Version   1/22/2009              Chris Anderson 5/15/01 (C) UCLA
-// Version : 03/19/2018
+// Version : 01/14/2019
 //
 /*
 #############################################################################
@@ -244,6 +243,12 @@ long* evaluationPriority)
 //                  differentiate
 //#####################################################################
 //
+
+SCC::SymFun differentiate(SCC::SymFun& F,const string& var)
+{
+	return differentiate(F,var.c_str());
+}
+
 SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
 {
     const char**V    = 0; // variable names  pointer

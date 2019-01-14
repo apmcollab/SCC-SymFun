@@ -30,10 +30,13 @@
 #
 #############################################################################
 */
+
 #include <iostream>
 #include <functional>
 #include <vector>
+#include <string>
 using namespace std;
+
 
 #ifndef  __SYMBOLIC_FUNCTION__
 #define  __SYMBOLIC_FUNCTION__
@@ -42,6 +45,8 @@ using namespace std;
 
 namespace SCC
 {
+
+
 
 #ifndef  __EXPRESSION_TRANSFORM__
 class ExpressionTransform;
@@ -140,42 +145,38 @@ public  :
 	{
 	std::function<double(double)> F = [this](double x1) {return this->operator()(x1);};
 	return std::move(F);
-	}
-#endif
+	};
 
-#if __cplusplus > 199711L
+
+
 	std::function<double(double,double)> getEvaluationPtr2d() const
 	{
 	std::function<double(double,double)> F = [this](double x1,double x2) {return this->operator()(x1,x2);};
 	return std::move(F);
-	}
-#endif
+	};
 
-#if __cplusplus > 199711L
+
 	std::function<double(double,double,double)> getEvaluationPtr3d() const
 	{
 	std::function<double(double,double,double)> F = [this](double x1,double x2,double x3) {return this->operator()(x1,x2,x3);};
 	return std::move(F);
-	}
-#endif
+	};
 
-#if __cplusplus > 199711L
+
 	std::function<double(double,double,double,double)> getEvaluationPtr4d() const
 	{
 	std::function<double(double,double,double,double)> F = [this](double x1,double x2,double x3,double x4) {return this->operator()(x1,x2,x3,x4);};
 	return std::move(F);
-	}
-#endif
+	};
 
 
-#if __cplusplus > 199711L
 	std::function<double(vector<double>&)> getEvaluationPtrNd() const
 	{
 	std::function<double(vector<double>&)> F = [this](vector<double>& x) {return this->operator()(x);};
 	return std::move(F);
-	}
-#endif
+	};
 
+#endif
 
     void setConstantValue(const string& C,double x)
     {
@@ -205,13 +206,18 @@ public  :
 
 	friend ostream& operator <<(ostream& out_stream, const SymFun& F);
 
-    char*  getConstructorString() const;
-    int    getVariableCount() const;
-    char*  getVariableName(int i) const;
-    int    getConstantCount() const;
-    char*  getConstantName(int i) const;
-    double getConstantValue(int i) const;
-    void   setConstantValue(const char* S,double x);
+    char*        getConstructorString() const;
+    int          getVariableCount() const;
+    const char*  getVariableName(int i) const;
+
+    int          getConstantCount() const;
+    const char*  getConstantName(int i) const;
+
+    double       getConstantValue(int i) const;
+    double       getConstantValue(const string& S) const;
+    double       getConstantValue(const char*   S) const;
+
+    void         setConstantValue(const char* S,double x);
 
     long   getSymbolCount() const;
     char   **sNames;
