@@ -1,10 +1,10 @@
-
 //
 //##################################################################
-//                CAM SYMBOLIC FUNCTION
+//                SYMFUN SYMBOLIC FUNCTION
 //##################################################################
 //
-//                                     Chris Anderson 7/21/97 (C) UCLA
+// Chris Anderson 7/21/97 (C) UCLA
+//
 /*! 
     \class SymFun
     \brief An instance of class SymFun implements a
@@ -13,42 +13,53 @@
     
     The syntax for the initialization string is that of general C++ expressions. 
     The initialization string can contain references to C++ math functions 
-    (those in math.h) as well as symbolic constants. The ^ character can be used
+    (those in cmath) as well as symbolic constants. The ^ character can be used
     to specify exponentiation, e.g. x^2 = x*x.
     
     The () operator is overloaded so the standard functional 
-    evaluation syntax, e.g. f(x), is used to evaluate the CAMsymbolicFuntion instance.
+    evaluation syntax, e.g. f(x), is used to evaluate the SCC::SymFun instance.
     
-    Sample Usage:
-\code
-int Vcount = 2;                   // number of independent variables
-char*V []  = {"x","y"};           // x,y  = independent variable names
-char*S     = "x^2 + 2*y";         // specify a function 
-     
-SymFun F(V,Vcount,S); // initialize instance
-    
-cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0,3.0) 
-\endcode
-
     @author Chris Anderson
     @date 7/21/97
-    @version 01/22/09
+    @version 01/14/19
     
+*/
+
+/*
+#############################################################################
+#
+# Copyright 1996-2019 Chris Anderson
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For a copy of the GNU General Public License see
+# <http://www.gnu.org/licenses/>.
+#
+#############################################################################
 */
 #ifdef _MSC_VER                   // Add so Visual-Studio doesn't
 #define _CRT_SECURE_NO_DEPRECATE   // complain about use of strcpy.
 #endif 
 
-#include <string>
-#include <stdlib.h>
-#include <stdio.h>
-#include <cstring>
-#include <cstdlib>
-#include <cstdio>
-
 #include "SymFun.h"
 #include "ExpressionTransform.h"
 #include "RealOperatorLib.h"
+
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+using namespace std;
+
+
 //
 //##################################################################
 //                      CONSTRUCTORS
@@ -344,8 +355,32 @@ SCC::SymFun::~SymFun()
     destroy();
 }
 
-void SCC::SymFun::destroy()
+void SCC::SymFun::destroy(bool nullInstanceFlag)
 {
+	if(nullInstanceFlag)
+	{
+    constructorString = 0;
+
+    variableNames     = 0;
+    variableCount     = 0;
+
+    constantNames     = 0;
+    constantCount     = 0;
+    constantValues    = 0;
+
+    symbolCount       = 0;
+    sNames            = 0;
+
+    evaluationData     = 0;
+    evaluationDataSize = 0;
+
+    executionArray     = 0;
+    executionArraySize = 0;
+
+    LibFunctions       = 0;
+    return;
+	}
+
     int i;
     if(constructorString != 0) delete [] constructorString;
 
@@ -680,7 +715,7 @@ int SCC::SymFun::getVariableCount() const
 Returns the name of the ith variable associated with the 
 SymFun.
 */
-char*  SCC::SymFun::getVariableName(int i) const
+const char*  SCC::SymFun::getVariableName(int i) const
 {
       return variableNames[i];
 }
@@ -696,7 +731,7 @@ int SCC::SymFun::getConstantCount() const
  Returns the name of the ith symbolic constant associated 
  with the SymFun.
 */
-char*  SCC::SymFun::getConstantName(int i) const
+const char*  SCC::SymFun::getConstantName(int i) const
 {
       return constantNames[i];
 }
@@ -708,8 +743,40 @@ double  SCC::SymFun::getConstantValue(int i) const
 {
       return constantValues[i];
 }
+
+
 /**
- Returns the value of the ith symbolic constant 
+ Returns the value of the specified symbolic constant
+ associated with the SymFun.
+
+ @arg S: Character string with name of the symbolic constant.
+*/
+
+double SCC::SymFun::getConstantValue(const string& S) const
+{
+    return getConstantValue(S.c_str());
+}
+
+/**
+ Returns the value of the specified symbolic constant
+ associated with the SymFun.
+
+ @arg S: Character string with name of the symbolic constant.
+*/
+
+double SCC::SymFun::getConstantValue(const char* S) const
+{
+    int i;
+    for(i =0; i < constantCount; i++)
+    {
+    if(strcmp(S,constantNames[i]) == 0) return constantValues[i];
+    }
+
+    return 0.0;
+}
+
+/**
+ Sets the value of the ith symbolic constant
  associated with the SymFun.
  
  @arg S: Character string with name of the symbolic constant.

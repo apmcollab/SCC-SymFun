@@ -1,8 +1,6 @@
 #
-# This makefile builds the XML_ParameterList support library. 
+# This makefile builds the SCC::SynFun support library. 
 #
-#
-
 SHELL=/bin/sh
 
 # Parameters for library construction script 
@@ -25,9 +23,8 @@ MAKEFLAGS := $(sort $(MAKEFLAGS))
 endif
 
 ifeq ($(MAKECMDGOALS),release)
-
 CFLAGS      :=-O2  -fno-gcse -fno-optimize-sibling-calls -Wno-write-strings
-CXXFLAGS    :=-O2  -fno-gcse -fno-optimize-sibling-calls -Wno-write-strings
+CXXFLAGS    :=-O2  -fno-gcse -fno-optimize-sibling-calls -Wno-write-strings -std=c++11
 CDEFINES    += 
 CXXDEFINES  += 
 endif
@@ -35,7 +32,7 @@ endif
 ifeq ($(MAKECMDGOALS),debug)
 CFLAGS      =-g -Wall -fno-inline
 CDEFINES    =-D_DEBUG
-CXXFLAGS    =-g -Wall -fno-inline
+CXXFLAGS    =-g -Wall -fno-inline -std=c++11
 CXXDEFINES  +=-D_DEBUG 
 endif
 
