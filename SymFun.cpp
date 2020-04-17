@@ -57,7 +57,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-using namespace std;
+#include <vector>
+
 
 
 //
@@ -222,7 +223,7 @@ char*S     = "x^2 + 2*y";         // specify a function
      
 SymFun F(V,Vcount,S); // initialize instance
     
-cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0,3.0) 
+std::cout << F(2.0,3.0) << std::endl;        // evaluate and output result at (x,y) = (2.0,3.0)
 \endcode
 */
 SCC::SymFun::SymFun(const char** V, int Vcount, const char* S)
@@ -263,17 +264,17 @@ Sample:
 
     SymFun f(V,Vcount,C,Ccount,Cvalues, S);
 
-    cout << f << endl << endl;                    // print out function
+    std::cout << f << std::endl << std::endl;                    // print out function
 
-    cout << "The value of the function at x = 1.0 is " 
-         << f(1.0) << endl << endl;
+    std::cout << "The value of the function at x = 1.0 is "
+         << f(1.0) << std::endl << std::endl;
 
     f.setConstantValue("a",2.0);                  // reset the symbolic constant
                                                   // a to have the value 2.0
-    cout << f << endl << endl;                    // print out function
+    std::cout << f << std::endl << std::endl;                    // print out function
 
-    cout << "The value of the function at x = 1.0 is  " 
-         << f(1.0) << endl;
+    std::cout << "The value of the function at x = 1.0 is  "
+         << f(1.0) << std::endl;
 \endcode
 */
 
@@ -446,7 +447,7 @@ Initialize an SymFun instance to one
 of a single variable, x, where the function is
 specified by the null terminated string S. If the initialization fails,
 error diagnostics are output to the standard error stream
-(cerr) and the program returns an error value. 
+(std::cerr) and the program returns an error value.
 
 @arg S: Null terminated character string in the variable x that 
 specifies the function.
@@ -474,7 +475,7 @@ Initializes a SymFun instance to one
 of Vcount variables from the initialization string S. 
 S is a null terminated character string. If the initialization fails,
 error diagnostics are output to the standard error stream
-(cerr) and the program returns an error value. 
+(std::cerr) and the program returns an error value.
 
 @arg V      : Array of null terminated strings specifying independent variable names
 @arg Vcount : The number of independent variables
@@ -493,12 +494,12 @@ char*S     = "x^2 + 2*y";           // specify a function
 int ierr = F.initialize(V,Vcount,S);// initialize 
 if(ierr != 0) 
 {
-cerr << "Initialization of SymFun Failed" << endl;
+std::cerr << "Initialization of SymFun Failed" << std::endl;
 exit(1);
 }
 
     
-cout << F(2.0,3.0) << endl;        // evaluate and output result at (x,y) = (2.0,3.0) 
+std::cout << F(2.0,3.0) << std::endl;        // evaluate and output result at (x,y) = (2.0,3.0)
 \endcode
 */
 
@@ -518,7 +519,7 @@ int SCC::SymFun::initialize(const char** V, int Vcount, char const* S)
 Initializes a SymFun instance to one of Vcount variables and
 Ccount symbolic constants from the initialization string S. 
 If the initialization fails, error diagnostics are output to the 
-standard error stream (cerr) and the program returns an error value. 
+standard error stream (std::cerr) and the program returns an error value.
   
 @arg V      : Array of null terminated strings specifying independent variable names
 @arg Vcount : The number of independent variables
@@ -546,21 +547,21 @@ Sample:
     int ierr = f.initialize(V,Vcount,C,Ccount,Cvalues, S);
     if(ierr != 0) 
     {
-    cerr << "Initialization of SymFun Failed" << endl;
+    std::cerr << "Initialization of SymFun Failed" << std::endl;
     exit(1);
     }
 
-    cout << f << endl << endl;                    // print out function
+    std::cout << f << std::endl << std::endl;                    // print out function
 
-    cout << "The value of the function at x = 1.0 is " 
-         << f(1.0) << endl << endl;
+    std::cout << "The value of the function at x = 1.0 is "
+         << f(1.0) << std::endl << std::endl;
 
     f.setConstantValue("a",2.0);                  // reset the symbolic constant
                                                   // a to have the value 2.0
-    cout << f << endl << endl;                    // print out function
+    std::cout << f << std::endl << std::endl;                    // print out function
 
-    cout << "The value of the function at x = 1.0 is  " 
-         << f(1.0) << endl;
+    std::cout << "The value of the function at x = 1.0 is  "
+         << f(1.0) << std::endl;
 \endcode
 */
 int  SCC::SymFun::initialize(const char** V, int Vcount, const char** C,
@@ -668,23 +669,23 @@ long SCC::SymFun::getSymbolCount() const
  Outputs the initialization string, the variable names, the symbolic 
  constant names and the symbolic constant values.
 */
-ostream&  operator <<(ostream& out_stream, const SCC::SymFun& F)
+std::ostream&  operator <<(std::ostream& out_stream, const SCC::SymFun& F)
 {
     int i;
-     out_stream << F.getConstructorString() << endl;
-    out_stream << " Variables : " << endl;
+    out_stream << F.getConstructorString() << std::endl;
+    out_stream << " Variables : " << std::endl;
 
     for(i = 0; i < F.getVariableCount(); i++)
     {
-    out_stream << F.getVariableName(i) << endl;
+    out_stream << F.getVariableName(i) << std::endl;
     }
 
     if(F.getConstantCount() > 0)
     {
-    out_stream << " Constant Values : " << endl;
+    out_stream << " Constant Values : " << std::endl;
     for(i = 0; i < F.getConstantCount(); i++)
     {
-    out_stream << F.getConstantName(i) << "  " << F.getConstantValue(i) << endl;
+    out_stream << F.getConstantName(i) << "  " << F.getConstantValue(i) << std::endl;
     }}
 
 return out_stream;
@@ -752,7 +753,7 @@ double  SCC::SymFun::getConstantValue(int i) const
  @arg S: Character string with name of the symbolic constant.
 */
 
-double SCC::SymFun::getConstantValue(const string& S) const
+double SCC::SymFun::getConstantValue(const std::string& S) const
 {
     return getConstantValue(S.c_str());
 }
@@ -902,7 +903,7 @@ double SCC::SymFun::operator()(double x1, double x2, double x3, double x4) const
  n variable values in the <vector>double x.
  @arg x vector<double> array of values
 */
-double SCC::SymFun::operator()(const vector<double>& x) const
+double SCC::SymFun::operator()(const std::vector<double>& x) const
 {
 	int n = x.size();
     if(variableCount != n) argError(n, variableCount);
@@ -930,9 +931,9 @@ double SCC::SymFun::operator()(double*x, int n) const
 void SCC::SymFun::argError(int argC, int vCount)
 {
 	#ifdef _DEBUG
-    cerr << " Incorrect Number of Arguments in SymFun " << endl;
-    cerr << " Called with " << argC << " arguments, expecting " << vCount;
-  	cerr << " Fatal Error : Program Stopped " << endl;
+    std::cerr << " Incorrect Number of Arguments in SymFun " << std::endl;
+    std::cerr << " Called with " << argC << " arguments, expecting " << vCount;
+  	std::cerr << " Fatal Error : Program Stopped " << std::endl;
 	exit(1);
     #endif
 }

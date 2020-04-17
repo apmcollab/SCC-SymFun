@@ -48,8 +48,6 @@
 #include <cstring>
 #include <cstdlib>
 #include <sstream>
-using namespace std;
-
 
 #ifndef __SYMUTILITY__
 #define __SYMUTILITY__
@@ -74,7 +72,7 @@ long* evaluationPriority)
 
     SCC::RealOperatorLib  L;
 
-    ostringstream sbuf;
+    std::ostringstream sbuf;
     sbuf.str("");
 
     long i;
@@ -116,11 +114,11 @@ long* evaluationPriority)
     argCount      = F.executionArray[executionIndex]; executionIndex++;
     resultIndex   = F.executionArray[executionIndex+(argCount-1)];
 
-    //cout << "Fix this problem later ZZZZ " << endl;
-    //cout << functionIndex << endl;
-    //cout << argCount      << endl;
-    //cout << resultIndex   << endl;
-    //cout << endl;
+    //std::cout << "Fix this problem later ZZZZ " << std::endl;
+    //std::cout << functionIndex << std::endl;
+    //std::cout << argCount      << std::endl;
+    //std::cout << resultIndex   << std::endl;
+    //std::cout << std::endl;
 
     centPriority = L.Priority[functionIndex];
 //
@@ -163,12 +161,12 @@ long* evaluationPriority)
     )
     {
     sbuf << L.Symbols[functionIndex]
-    << evaluationStrings[F.executionArray[executionIndex]] << ends;
+    << evaluationStrings[F.executionArray[executionIndex]] << std::ends;
     }
     else
     {
     sbuf << L.Symbols[functionIndex]
-    << "(" << evaluationStrings[F.executionArray[executionIndex]] << ")" << ends;
+    << "(" << evaluationStrings[F.executionArray[executionIndex]] << ")" << std::ends;
     }
 
     }
@@ -181,7 +179,7 @@ long* evaluationPriority)
     {
     sbuf << L.Symbols[functionIndex] << "("
     << evaluationStrings[F.executionArray[executionIndex]] << ","
-    << evaluationStrings[F.executionArray[executionIndex+1]] << ")" << ends;
+    << evaluationStrings[F.executionArray[executionIndex+1]] << ")" << std::ends;
     }
     else
     {
@@ -218,7 +216,7 @@ long* evaluationPriority)
             sbuf << evaluationStrings[F.executionArray[executionIndex+1]];
         }
         }
-        sbuf << ends;
+        sbuf << std::ends;
     }
     }
     evaluationStrings[resultIndex] = new char[strlen((sbuf.str()).c_str()) + 1];
@@ -233,11 +231,11 @@ long* evaluationPriority)
 //  Diagnostic Output
 //
 /*
-    cout << endl << "Evaluation Array " << endl;
+    std::cout << std::endl << "Evaluation Array " << std::endl;
 
     for(i=0; i < F.evaluationDataSize; i++)
     {
-       cout << evaluationStrings[i] << endl;
+       std::cout << evaluationStrings[i] << std::endl;
     }
 */
 
@@ -248,7 +246,7 @@ long* evaluationPriority)
 //#####################################################################
 //
 
-SCC::SymFun differentiate(SCC::SymFun& F,const string& var)
+SCC::SymFun differentiate(SCC::SymFun& F,const std::string& var)
 {
 	return differentiate(F,var.c_str());
 }
@@ -279,7 +277,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     long    stringSize;
     long    resultIndex;
 
-    ostringstream sbuf;
+    std::ostringstream sbuf;
     sbuf.str("");
 
 //
@@ -467,11 +465,11 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     (!strcmp(L.Symbols[functionIndex],"-")))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         sbuf << L.Symbols[functionIndex]      << "("
-                << devaluationStrings[arg1Index] << ")" << ends;
+                << devaluationStrings[arg1Index] << ")" << std::ends;
         }
     }
     //
@@ -494,19 +492,19 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     else if (!strcmp(L.Symbols[functionIndex],"sinh"))  strncpy(dfunctionString,"cosh",5);
 
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         if((!strcmp(devaluationStrings[arg1Index],"1"))
         ||(!strcmp(devaluationStrings[arg1Index],"(1)")))
         {
         sbuf << "(" << dfunctionString << "("  << evaluationStrings[arg1Index]
-                << "))" << ends;
+                << "))" << std::ends;
         }
         else
         {
          sbuf << "(" << dfunctionString << "(" << evaluationStrings[arg1Index]
-                 << "))*(" << devaluationStrings[arg1Index] << ")" << ends;
+                 << "))*(" << devaluationStrings[arg1Index] << ")" << std::ends;
         }}
     }
     //
@@ -519,7 +517,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
             (!strcmp(L.Symbols[functionIndex],"atan")))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
           if((!strcmp(devaluationStrings[arg1Index],"1"))
@@ -530,7 +528,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
           else if(!strcmp(L.Symbols[functionIndex],"acos")) {(sbuf) << "(-1./sqrt(1-(";}
           else if(!strcmp(L.Symbols[functionIndex],"atan")) {(sbuf) << "(1./(1.+(";}
 
-          sbuf << evaluationStrings[arg1Index] << ")^2))" << ends;
+          sbuf << evaluationStrings[arg1Index] << ")^2))" << std::ends;
           }
           else
           {
@@ -540,7 +538,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
           else if(!strcmp(L.Symbols[functionIndex],"atan")) {(sbuf) <<"((1./(1.+(";}
 
           sbuf <<evaluationStrings[arg1Index] << ")^2))" << "*"
-          << "(" << devaluationStrings[arg1Index] << "))" << ends;
+          << "(" << devaluationStrings[arg1Index] << "))" << std::ends;
          }}
     }
 
@@ -552,18 +550,18 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     else if(!strcmp(L.Symbols[functionIndex],"log"))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         if((!strcmp(devaluationStrings[arg1Index],"1"))
         ||(!strcmp(devaluationStrings[arg1Index],"(1)")))
         {
-        sbuf << "(1./(" << evaluationStrings[arg1Index] << "))" << ends;
+        sbuf << "(1./(" << evaluationStrings[arg1Index] << "))" << std::ends;
         }
         else
         {
         sbuf << "(1./(" << evaluationStrings[arg1Index]
-                << "))*(" << devaluationStrings[arg1Index] << ")" << ends;
+                << "))*(" << devaluationStrings[arg1Index] << ")" << std::ends;
         }}
     }
     //
@@ -574,20 +572,20 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     else if(!strcmp(L.Symbols[functionIndex],"log10"))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         if((!strcmp(devaluationStrings[arg1Index],"1"))
         ||(!strcmp(devaluationStrings[arg1Index],"(1)")))
         {
         sbuf << "(1./((" << evaluationStrings[arg1Index]
-                << ")*log(10.0)))" << ends;
+                << ")*log(10.0)))" << std::ends;
         }
         else
         {
         sbuf <<"((1./(("
                 << evaluationStrings[arg1Index]  << ")*log(10.0)))*("
-                << devaluationStrings[arg1Index] << "))" << ends;
+                << devaluationStrings[arg1Index] << "))" << std::ends;
         }}
     }
     //
@@ -598,19 +596,19 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     else if(!strcmp(L.Symbols[functionIndex],"sqrt"))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         if((!strcmp(devaluationStrings[arg1Index],"1"))
         ||(!strcmp(devaluationStrings[arg1Index],"(1)")))
         {
         sbuf << "(0.5/(" << evaluationStrings[arg1Index]
-                << ")^0.5)" << ends;
+                << ")^0.5)" << std::ends;
         }
         else
         {
         sbuf << "((0.5/(" << evaluationStrings[arg1Index] << ")^0.5)*("
-                << devaluationStrings[arg1Index] << "))" << ends;
+                << devaluationStrings[arg1Index] << "))" << std::ends;
        }}
     }
     //
@@ -621,20 +619,20 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     else if(!strcmp(L.Symbols[functionIndex],"tan"))
     {
         if(strlen(devaluationStrings[arg1Index])==0)
-        {sbuf << ends;}
+        {sbuf << std::ends;}
         else
         {
         if((!strcmp(devaluationStrings[arg1Index],"1"))
         ||(!strcmp(devaluationStrings[arg1Index],"(1)")))
         {
         sbuf << "(1/(cos(" << evaluationStrings[arg1Index]
-                << ")^2))" << ends;
+                << ")^2))" << std::ends;
         }
         else
         {
         sbuf << "((1/(cos(" << evaluationStrings[arg1Index]
                 << ")^2))*(" << devaluationStrings[arg1Index] << "))"
-                << ends;
+                << std::ends;
         }}
     }
     }
@@ -656,16 +654,16 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
 
     if((strlen(devaluationStrings[arg1Index])==0)&&
        (strlen(devaluationStrings[arg2Index])==0))
-       {sbuf << ends;}
+       {sbuf << std::ends;}
     else
     if(strlen(devaluationStrings[arg2Index]) != 0)
     {
         sbuf << "(" << devaluationStrings[arg1Index] << L.Symbols[functionIndex] <<
-        devaluationStrings[arg2Index] << ")" << ends;
+        devaluationStrings[arg2Index] << ")" << std::ends;
     }
     else
     {
-        sbuf << "(" << devaluationStrings[arg1Index] << ")" << ends;
+        sbuf << "(" << devaluationStrings[arg1Index] << ")" << std::ends;
     }}
     //
     //**************************************************
@@ -676,7 +674,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     {
     if((strlen(devaluationStrings[arg1Index])==0)&&
        (strlen(devaluationStrings[arg2Index])==0))
-       {sbuf << ends;}
+       {sbuf << std::ends;}
     else
     {
     sbuf << "(";
@@ -714,7 +712,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
         }
     }
 
-    sbuf << ")" << ends;
+    sbuf << ")" << std::ends;
 
     }}
     //
@@ -726,7 +724,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     {
     if((strlen(devaluationStrings[arg1Index])==0)&&
        (strlen(devaluationStrings[arg2Index])==0))
-    {sbuf << ends;}
+    {sbuf << std::ends;}
     else
     {
     sbuf << "((";
@@ -760,7 +758,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     }
 
     }
-    sbuf << ")/((" <<  evaluationStrings[arg2Index] << ")^2))" << ends;
+    sbuf << ")/((" <<  evaluationStrings[arg2Index] << ")^2))" << std::ends;
     }}
 
     //
@@ -777,7 +775,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     {
     if((strlen(devaluationStrings[arg1Index])==0)&&
     (strlen(devaluationStrings[arg2Index])==0))
-    {sbuf << ends;}
+    {sbuf << std::ends;}
     else
     {
     if(strlen(devaluationStrings[arg1Index])!=0)
@@ -906,7 +904,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
             << evaluationStrings[arg1Index]  << ")";
     }
 
-    sbuf << ends;
+    sbuf << std::ends;
     }}
 
     //
@@ -931,7 +929,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
 //  and then an evaluation string
 //
 
-    // cout << devaluationStrings[resultIndex] << endl;
+    // std::cout << devaluationStrings[resultIndex] << std::endl;
 
     if(strlen(devaluationStrings[resultIndex]) == 0)
     {
@@ -943,17 +941,17 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     cV,devaluationStrings[resultIndex]);
     }
 
-    if(initReturn) {cout << " Error " << endl;}
+    if(initReturn) {std::cout << " Error " << std::endl;}
 
     char** dStrings  = new char*[D.evaluationDataSize];
     long*  dPriority = new long[D.evaluationDataSize];
 
     /* Fix later : problem string F = a0 + a1*(x/h), diff w.r.t. a0
-    cout << endl;
-    cout << D.evaluationDataSize << endl;
-    cout << "DDD" << endl;
-    cout << D.getConstructorString() << endl;
-    cout << endl;
+    std::cout << std::endl;
+    std::cout << D.evaluationDataSize << std::endl;
+    std::cout << "DDD" << std::endl;
+    std::cout << D.getConstructorString() << std::endl;
+    std::cout << std::endl;
     */
 
 
@@ -984,7 +982,7 @@ SCC::SymFun differentiate(SCC::SymFun& F,const char* var)
     derivativeString);
     }
 
-    if(initReturn) {cout << " Error " << endl;}
+    if(initReturn) {std::cout << " Error " << std::endl;}
 //
 //  clean up
 
