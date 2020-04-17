@@ -37,7 +37,6 @@
 
 #include "RealOperatorLib.h"
 
-using namespace std;
 //
 // Static Initialization
 //
