@@ -35,7 +35,7 @@
 #include <functional>
 #include <vector>
 #include <string>
-using namespace std;
+
 
 
 #ifndef  __SYMBOLIC_FUNCTION__
@@ -67,14 +67,14 @@ public  :
     //   Alternate constructors and initializers
     //###############################################
     //
-    SymFun(const string& S)
+    SymFun(const std::string& S)
     {
     	 bool nullInstanceFlag = true;
     	 destroy(nullInstanceFlag);
     	 initialize(S);
     }
 
-    SymFun(const vector<string> V, const string& S)
+    SymFun(const std::vector<std::string> V, const std::string& S)
     {
     	bool nullInstanceFlag = true;
     	destroy(nullInstanceFlag);
@@ -82,7 +82,7 @@ public  :
     	initialize(V,S);
     }
 
-    SymFun(const vector<string> V, const vector<string> C, const vector<double> Cvalues, const string& S)
+    SymFun(const std::vector<std::string> V, const std::vector<std::string> C, const std::vector<double> Cvalues, const std::string& S)
     {
     	bool nullInstanceFlag = true;
     	destroy(nullInstanceFlag);
@@ -90,7 +90,7 @@ public  :
     	initialize(V,C,Cvalues,S);
     }
 
-    int initialize(const string& S)
+    int initialize(const std::string& S)
     {
     	bool nullInstanceFlag = true;
     	destroy(nullInstanceFlag);
@@ -98,13 +98,13 @@ public  :
     	return initialize(S.c_str());
     }
 
-    int initialize(const vector<string> V, const string& S)
+    int initialize(const std::vector<std::string> V, const std::string& S)
     {
     	bool nullInstanceFlag = true;
     	destroy(nullInstanceFlag);
 
     	int Vcount = V.size();
-    	vector<const char*> Varray(Vcount);
+    	std::vector<const char*> Varray(Vcount);
     	for(int i = 0; i < Vcount; i++)
     	{
     		Varray[i] = V[i].c_str();
@@ -112,20 +112,20 @@ public  :
     	return initialize(&Varray[0],Vcount,S.c_str());
     }
 
-    int initialize(const vector<string> V, const vector<string> C, const vector<double> Cvalues, const string& S)
+    int initialize(const std::vector<std::string> V, const std::vector<std::string> C, const std::vector<double> Cvalues, const std::string& S)
     {
     	bool nullInstanceFlag = true;
     	destroy(nullInstanceFlag);
 
     	int Vcount = V.size();
-    	vector<const char*> Varray(Vcount);
+    	std::vector<const char*> Varray(Vcount);
     	for(int i = 0; i < Vcount; i++)
     	{
     		Varray[i] = V[i].c_str();
     	}
 
     	int Ccount = C.size();
-    	vector<const char*> Carray(Ccount);
+    	std::vector<const char*> Carray(Ccount);
     	for(int i = 0; i < Ccount; i++)
     	{
     		Carray[i] = C[i].c_str();
@@ -169,14 +169,14 @@ public  :
 	};
 
 
-	std::function<double(vector<double>&)> getEvaluationPtrNd() const
+	std::function<double(std::vector<double>&)> getEvaluationPtrNd() const
 	{
-	std::function<double(vector<double>&)> F = [this](vector<double>& x) {return this->operator()(x);};
+	std::function<double(std::vector<double>&)> F = [this](std::vector<double>& x) {return this->operator()(x);};
 	return std::move(F);
 	};
 
 
-    void setConstantValue(const string& C,double x)
+    void setConstantValue(const std::string& C,double x)
     {
     	setConstantValue(C.c_str(),x);
     }
@@ -202,7 +202,7 @@ public  :
 
     void operator=(const SymFun& F);
 
-	friend ostream& operator <<(ostream& out_stream, const SymFun& F);
+	friend std::ostream& operator <<(std::ostream& out_stream, const SymFun& F);
 
     char*        getConstructorString() const;
     int          getVariableCount() const;
@@ -212,7 +212,7 @@ public  :
     const char*  getConstantName(int i) const;
 
     double       getConstantValue(int i) const;
-    double       getConstantValue(const string& S) const;
+    double       getConstantValue(const std::string& S) const;
     double       getConstantValue(const char*   S) const;
 
     void         setConstantValue(const char* S,double x);
@@ -226,7 +226,7 @@ public  :
     double operator()(double x1, double x2, double x3, double x4) const;
 
     double operator()(double*x, int n)   const;
-    double operator()(const vector<double>& x) const;
+    double operator()(const std::vector<double>& x) const;
 
 
 public  :

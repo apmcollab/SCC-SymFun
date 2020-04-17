@@ -107,64 +107,64 @@ void SCC::RealOperatorLib::Divide(double** argPtr)
 {	*argPtr[2] =  (*argPtr[0])/(*argPtr[1]); }
 
 void SCC::RealOperatorLib::Exponentiate(double** argPtr)
-{	*argPtr[2] =  pow(*argPtr[0],*argPtr[1]); }
+{	*argPtr[2] =  std::pow(*argPtr[0],*argPtr[1]); }
 
 void SCC::RealOperatorLib::Sin(double** argPtr)
-{ 	*argPtr[1] = sin(*argPtr[0]); }
+{ 	*argPtr[1] = std::sin(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Cos(double** argPtr)
-{	*argPtr[1] = cos(*argPtr[0]); }
+{	*argPtr[1] = std::cos(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Tan(double** argPtr)
-{	*argPtr[1] = tan(*argPtr[0]); }
+{	*argPtr[1] = std::tan(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Asin(double** argPtr)
-{	*argPtr[1] = asin(*argPtr[0]); }
+{	*argPtr[1] = std::asin(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Acos(double** argPtr)
-{	*argPtr[1] = acos(*argPtr[0]); }
+{	*argPtr[1] = std::acos(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Atan(double** argPtr)
-{  *argPtr[1] = atan(*argPtr[0]); }
+{  *argPtr[1] = std::atan(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Atan2(double** argPtr)
-{ *argPtr[2] = atan2(*argPtr[0],*argPtr[1]);}
+{ *argPtr[2] = std::atan2(*argPtr[0],*argPtr[1]);}
 
 void SCC::RealOperatorLib::Sinh(double** argPtr)
-{	*argPtr[1] = sinh(*argPtr[0]); }
+{	*argPtr[1] = std::sinh(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Cosh(double** argPtr)
-{	*argPtr[1] = cosh(*argPtr[0]); }
+{	*argPtr[1] = std::cosh(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Tanh(double** argPtr)
-{	*argPtr[1] = tanh(*argPtr[0]); }
+{	*argPtr[1] = std::tanh(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Ceil(double** argPtr)
-{	*argPtr[1] = ceil(*argPtr[0]); }
+{	*argPtr[1] = std::ceil(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Exp(double** argPtr)
-{	*argPtr[1] = exp(*argPtr[0]); }
+{	*argPtr[1] = std::exp(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Fabs(double** argPtr)
-{	*argPtr[1] = fabs(*argPtr[0]); }
+{	*argPtr[1] = std::fabs(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Floor(double** argPtr)
-{	*argPtr[1] = floor(*argPtr[0]); }
+{	*argPtr[1] = std::floor(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Fmod(double** argPtr)
-{ *argPtr[2] = fmod(*argPtr[0],*argPtr[1]);}
+{ *argPtr[2] = std::fmod(*argPtr[0],*argPtr[1]);}
 
 void SCC::RealOperatorLib::Log(double** argPtr)
-{	*argPtr[1] = log(*argPtr[0]); }
+{	*argPtr[1] = std::log(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Log10(double** argPtr)
-{	*argPtr[1] = log10(*argPtr[0]); }
+{	*argPtr[1] = std::log10(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Sqrt(double** argPtr)
-{	*argPtr[1] = sqrt(*argPtr[0]); }
+{	*argPtr[1] = std::sqrt(*argPtr[0]); }
 
 void SCC::RealOperatorLib::Pow(double** argPtr)
-{ *argPtr[2] = pow(*argPtr[0],*argPtr[1]);}
+{ *argPtr[2] = std::pow(*argPtr[0],*argPtr[1]);}
 
 
 void SCC::RealOperatorLib::evaluate(int, double** )
