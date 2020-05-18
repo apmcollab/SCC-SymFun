@@ -143,7 +143,7 @@ public  :
 	std::function<double(double)> getEvaluationPtr1d() const
 	{
 	std::function<double(double)> F = [this](double x1) {return this->operator()(x1);};
-	return std::move(F);
+	return F;
 	};
 
 
@@ -151,28 +151,28 @@ public  :
 	std::function<double(double,double)> getEvaluationPtr2d() const
 	{
 	std::function<double(double,double)> F = [this](double x1,double x2) {return this->operator()(x1,x2);};
-	return std::move(F);
+	return F;
 	};
 
 
 	std::function<double(double,double,double)> getEvaluationPtr3d() const
 	{
 	std::function<double(double,double,double)> F = [this](double x1,double x2,double x3) {return this->operator()(x1,x2,x3);};
-	return std::move(F);
+	return F;
 	};
 
 
 	std::function<double(double,double,double,double)> getEvaluationPtr4d() const
 	{
 	std::function<double(double,double,double,double)> F = [this](double x1,double x2,double x3,double x4) {return this->operator()(x1,x2,x3,x4);};
-	return std::move(F);
+	return F;
 	};
 
 
 	std::function<double(std::vector<double>&)> getEvaluationPtrNd() const
 	{
 	std::function<double(std::vector<double>&)> F = [this](std::vector<double>& x) {return this->operator()(x);};
-	return std::move(F);
+	return F;
 	};
 
 
